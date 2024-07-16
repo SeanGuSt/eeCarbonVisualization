@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <base target="_top">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Map Attempt 0 - Stolen from Leaflet </title>
+        
+        <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico">
+    
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            .leaflet-container {
+                height: 80%;
+                width: 100%;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
+    
+        
+    </head>
+    <body>
+        <div id="map" style="position: relative; outline-style: none;"></div> 
+        <script>
+            const init_geo = JSON.parse("{{ initial_geocenter|escapejs }}");//The coordinates of where the map will be centered
+            var circles = JSON.parse("{{geolocations | escapejs }}");//The coordinates of all the site markers
+            var sites = JSON.parse("{{sites | escapejs}}");//The sites where you can get data from. Ordered the same as coordinates in circles
+            const myUrl = "{% url 'eeMapPopup0:ajax_load_layer_values' %}";//The url of the python function. See urlList.py
+        </script>
+        <script src = {% static "scripts/javascript/mapPopup.js" %}></script>
+        </body>
+</html>

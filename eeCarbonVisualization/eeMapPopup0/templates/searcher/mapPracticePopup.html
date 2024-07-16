@@ -1,0 +1,25 @@
+{% load static %}
+"{{footer_keys}}"
+<div class="graphViewer-grid-biggraph"><canvas id="chartCurve"></canvas></div><!--This line holds our graph. Or, rather, the canvas for it-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src = {% static "scripts/javascript/mapPopup.js" %}></script>
+<script>
+    footer_keys = JSON.parse("{{ footer_keys|escapejs }}");
+    footer_values = JSON.parse("{{ footer_values|escapejs }}");
+    layer_ = JSON.parse("{{ layer_|escapejs }}");
+    data = JSON.parse("{{ data|escapejs }}")
+    console.log(layer_.length)
+    for(let layer_num = 0; layer_num < layer_.length; layer_num++){
+        var newDataset = {
+            data: data[layer_num],
+            type : "bar",
+            label : "Layer " + layer_[layer_num],
+            backgroundColor : BCOLOR[layer_num % BCOLOR.length]
+        };
+        for (let i = 0; i < footer_keys.length; i++){cd[layer_num][footer_keys[i]] = data[footer_keys[i]][layer_num];}
+        cd.push(newDataset);
+    }
+    for(let i = 1; i <= cd[DATASET_BAR_GRAPH].data.length; i++){chart.data.labels.push("Sample " + i);}
+    chartCurve.update();
+</script>
